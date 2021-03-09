@@ -5,6 +5,8 @@ use warnings;
 
 use Carp 'croak';
 use Scalar::Util 'blessed';
+use Encode 'encode';
+use Unicode::Normalize 'NFC';
 
 sub _load_extension {
 	my $name = shift;
@@ -66,9 +68,14 @@ sub new {
 	return $self;
 }
 
+sub _normalize_password {
+	my $password = shift;
+	return encode(NFC($password), 'utf-8-strict');
+}
+
 sub hash_password {
 	my ($self, $password) = @_;
-	return $self->{encoder}->hash_password($password);
+	return $self->{encoder}->hash_password(_normalize_password($password));
 }
 
 sub needs_rehash {
@@ -82,7 +89,7 @@ sub verify_password {
 
 	for my $validator (@{ $self->{validators} }) {
 		if ($validator->accepts_hash($hash)) {
-			return $validator->verify_password($password, $hash);
+			return $validator->verify_password(_normalize_password($password), $hash);
 		}
 	}
 
