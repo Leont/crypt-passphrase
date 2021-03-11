@@ -70,7 +70,7 @@ sub new {
 
 sub _normalize_password {
 	my $password = shift;
-	return encode(NFC($password), 'utf-8-strict');
+	return encode('utf-8-strict', NFC($password));
 }
 
 sub hash_password {

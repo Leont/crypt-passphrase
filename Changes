@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Fix password encoding to utf8
 
 0.002     2021-03-11 19:54:06+01:00 Europe/Amsterdam
           - Normalize passwords before hashing them
