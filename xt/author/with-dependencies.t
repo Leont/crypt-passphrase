@@ -38,15 +38,15 @@ ok(!$passphrase->needs_rehash($hash1), 'Self-generated password doesn\'t need to
 
 my $hash2 = argon2id_pass($password, $salt, 2, '16M', 1, 16);
 ok($passphrase->verify_password($password, $hash2), 'Can verify password with equivalent parameters');
-ok(!$passphrase->needs_rehash($hash2)'Password with equivalent parameters doesn\'t need rehash');
+ok(!$passphrase->needs_rehash($hash2), 'Password with equivalent parameters doesn\'t need rehash');
 
 my $hash3 = argon2i_pass($password, $salt, 2, '16M', 1, 16);
-ok($passphrase->verify_password($password, $hash3) 'Can verify password with argon2i');
+ok($passphrase->verify_password($password, $hash3), 'Can verify password with argon2i');
 ok($passphrase->needs_rehash($hash3), 'argon2i hash needs rehash');
 
 my $hash4 = argon2id_pass($password, $salt, 2, '8M', 1, 16);
 ok($passphrase->verify_password($password, $hash4), 'Can verify reduced memory cost hash');
-ok($passphrase->needs_rehash($hash4)'Reduced memory cost hash needs rehash');
+ok($passphrase->needs_rehash($hash4), 'Reduced memory cost hash needs rehash');
 
 my $hash5 = bcrypt($password, '$2a$10$' . en_base64($salt));
 ok($passphrase->verify_password($password, $hash5), 'Can verify bcrypt hash');
