@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Use Crypt::URandom for randomness
 
 0.003     2021-03-11 20:50:59+01:00 Europe/Amsterdam
           - Fix password encoding to utf8
