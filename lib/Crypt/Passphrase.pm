@@ -201,5 +201,7 @@ In some situations, it may be appropriate to have different password settings fo
 
 =item * L<Crypt::Passphrase::Scrypt|Crypt::Passphrase::Scrypt>
 
+=item * L<Crypt::Passphrase::PBKDF2|Crypt::Passphrase::PBKDF2>
+
 =back
 
