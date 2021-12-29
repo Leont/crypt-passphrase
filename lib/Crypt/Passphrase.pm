@@ -133,7 +133,7 @@ A C<Crypt::Passphrase> object has a single encoder. This can be passed in three 
 
 =item * A simple string
 
-The name of the encoder class. If the value starts with a C<+>, the C<+> will be removed and the remainder will be taken as a fully-qualified package name. Otherwise, C<Crypt::Passphrase::> will be prepended to he value.
+The name of the encoder class. If the value starts with a C<+>, the C<+> will be removed and the remainder will be taken as a fully-qualified package name. Otherwise, C<Crypt::Passphrase::> will be prepended to the value.
 
 The class will be loaded, and constructed without arguments.
 
@@ -177,9 +177,11 @@ Calling this only ever makes sense after a password has been verified.
 
 While encoders generally allow for a default configuration, I would strongly encourage anyone to research what settings work for your application. It is generally a trade-off between usability/resources and security.
 
+The configuration for C<Crypt::Passphrase> should generally be part of your application configuration file, and not be hardcoded if that can be avoided.
+
 =head2 Unicode
 
-C<Crypt::Password> considers passwords to be text, and as such you should ensure any password input is decoded if it contains any non-ascii characters. C<Crypt::Password> will take care of both normalizing and encoding such input.
+C<Crypt::Passphrase> considers passwords to be text, and as such you should ensure any password input is decoded if it contains any non-ascii characters. C<Crypt::Passphrase> will take care of both normalizing and encoding such input.
 
 =head2 DOS attacks
 
