@@ -20,6 +20,7 @@ sub crypt_subtypes {
 my %cache;
 sub accepts_hash {
 	my ($self, $hash) = @_;
+	return if not defined $hash;
 	$cache{$self} ||= do {
 		my $string = join '|', $self->crypt_subtypes or return;
 		qr/ \A \$ (?: $string ) \$ /x;
