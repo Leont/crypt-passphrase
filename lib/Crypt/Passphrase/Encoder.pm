@@ -17,10 +17,14 @@ sub crypt_subtypes {
 	return;
 }
 
+my %cache;
 sub accepts_hash {
 	my ($self, $hash) = @_;
-	my $subtypes = join '|', $self->crypt_subtypes or return;
-	return $hash =~ / \A \$ (?: $subtypes ) \$ /x;
+	$cache{$self} ||= do {
+		my $string = join '|', $self->crypt_subtypes or return;
+		qr/ \A \$ (?: $string ) \$ /x;
+	};
+	return $hash =~ $cache{$self};
 }
 
 1;

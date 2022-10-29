@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Cache accepted hashes for crypt validators
 
 0.004     2021-12-29 02:25:52+01:00 Europe/Amsterdam
           - Use Crypt::URandom for randomness
