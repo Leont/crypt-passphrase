@@ -7,6 +7,7 @@ use parent 'Crypt::Passphrase::Validator';
 
 use Carp 'croak';
 use Crypt::URandom;
+use Hash::Util::FieldHash 'fieldhash';
 
 sub random_bytes {
 	my ($self, $count) = @_;
@@ -17,7 +18,7 @@ sub crypt_subtypes {
 	return;
 }
 
-my %cache;
+fieldhash my %cache;
 sub accepts_hash {
 	my ($self, $hash) = @_;
 	return if not defined $hash;
