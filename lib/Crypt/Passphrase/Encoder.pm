@@ -44,7 +44,7 @@ This hashes a password. Note that this will return a new value each time since i
 
 This method will return true if the password needs a rehash. This may either mean it's using a different hashing algoritm, or because it's using different parameters. This should be overloaded in your subclass.
 
-=method crypt_types()
+=method crypt_subtypes()
 
 This method returns the types of crypt entries this validator supports. This is used to implement C<accepts_hash>.
 
