@@ -9,7 +9,7 @@ sub new {
 	my ($class, %args) = @_;
 	return bless {
 		callback => $args{callback},
-		acceptor => $args{acceptor} || sub { 1 },
+		acceptor => $args{acceptor} // sub { 1 },
 	}, $class;
 }
 
