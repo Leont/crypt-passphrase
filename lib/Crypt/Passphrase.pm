@@ -6,7 +6,7 @@ use warnings;
 use Carp 'croak';
 use Scalar::Util 'blessed';
 use Encode 'encode';
-use Unicode::Normalize 'NFC';
+use Unicode::Normalize 'normalize';
 
 sub _load_extension {
 	my $name = shift;
@@ -55,27 +55,32 @@ sub _load_validator {
 	}
 }
 
+my %valid = map { $_ => 1 } qw/C D KC KD/;
 sub new {
 	my ($class, %args) = @_;
 	my $encoder = _load_encoder($args{encoder});
 	my @validators = map { _load_validator($_) } @{ $args{validators} };
+	my $normalization = $args{normalization} || 'C';
+	croak "Invalid normalization form $normalization" if not $valid{$normalization};
 
 	my $self = bless {
-		encoder  => $encoder,
-		validators => [ $encoder, @validators ],
+		encoder       => $encoder,
+		validators    => [ $encoder, @validators ],
+		normalization => $normalization,
 	}, $class;
 
 	return $self;
 }
 
 sub _normalize_password {
-	my $password = shift;
-	return encode('utf-8-strict', NFC($password));
+	my ($self, $password) = @_;
+	return encode('utf-8-strict', normalize($self->{normalization}, $password));
 }
 
 sub hash_password {
 	my ($self, $password) = @_;
-	return $self->{encoder}->hash_password(_normalize_password($password));
+	my $normalized = $self->_normalize_password($password);
+	return $self->{encoder}->hash_password($normalized);
 }
 
 sub needs_rehash {
@@ -89,7 +94,8 @@ sub verify_password {
 
 	for my $validator (@{ $self->{validators} }) {
 		if ($validator->accepts_hash($hash)) {
-			return $validator->verify_password(_normalize_password($password), $hash);
+			my $normalized = $self->_normalize_password($password);
+			return $validator->verify_password($normalized, $hash);
 		}
 	}
 
@@ -155,6 +161,10 @@ This argument is mandatory.
 This is a list of additional validators for passwords. These values can each either be the same an encoder value, except that the last entry may also be a coderef that takes the password and the hash as its arguments and returns a boolean value.
 
 The encoder is always considered as a validator and thus doesn't need to be explicitly specified.
+
+=item * normalization
+
+This sets the unicode normalization form used for the password. Valid values are C<'C'> (the default), C<'D'>, C<'KC'> and C<'KD'>. You should probably not change this unless it's necessary for compatibility with something else, you should definitely not change this on an existing database as that will break passwords affected by normalization.
 
 =back
 
