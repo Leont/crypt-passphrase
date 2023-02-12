@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Add curry_with_hash and curry_with_password methods
           - Add a unicode normalization option
           - Match MD5 and SHA hex case-insensitively
 

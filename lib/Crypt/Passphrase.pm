@@ -102,6 +102,18 @@ sub verify_password {
 	return;
 }
 
+sub curry_with_hash {
+	my ($self, $hash) = @_;
+	require Crypt::Passphrase::PassphraseHash;
+	return Crypt::Passphrase::PassphraseHash->new($self, $hash);
+}
+
+sub curry_with_password {
+	my ($self, $password) = @_;
+	my $hash = $self->hash_password($password);
+	return $self->curry_with_hash($hash);
+}
+
 1;
 
 # ABSTRACT: A module for managing passwords in a cryptographically agile manner
@@ -181,6 +193,14 @@ This will check a password satisfies a certain hash.
 This will check if a hash needs to be rehashed, either because it's in the wrong cipher or because the parameters are insufficient.
 
 Calling this only ever makes sense after a password has been verified.
+
+=method curry_with_hash($hash)
+
+This creates a C<Crypt::Passphrase::PassphraseHash> object for the hash, effectively currying C<Crypt::Passphrase> with that hash. This can be useful for plugging C<Crypt::Passphrase> into some frameworks (e.g. ORMs) that require a singular object to contain everything you need to match passwords against.
+
+=method curry_with_password($password)
+
+This method is like C<curry_with_hash>, but takes a password and hashes that first.
 
 =head1 TIPS AND TRICKS
 
