@@ -4,11 +4,11 @@ use strict;
 use warnings;
 
 sub new {
-	my ($class, $crypt_passphrase, $hash) = @_;
+	my ($class, $validator, $raw_hash) = @_;
 
 	return bless {
-		validator => $crypt_passphrase,
-		raw_hash  => $hash,
+		validator => $validator,
+		raw_hash  => $raw_hash,
 	}, $class;
 }
 
@@ -31,11 +31,11 @@ sub raw_hash {
 
 =head1 DESCRIPTION
 
-This class can be useful for plugging C<Crypt::Passphrase> into some frameworks (e.g. ORMs).
+This class can be useful for plugging C<Crypt::Passphrase> into some frameworks (e.g. ORMs) that require a singular object to contain everything you need to match passwords against. Effectively it's little more or less than currying the C<$hash> parameter to C<verify_password> and C<needs_rehash>.
 
-=method new($crypt_passphrase, $hash)
+=method new($crypt_passphrase, $raw_hash)
 
-This takes a Crypt::Passphrase object, and a hash string.
+This takes a C<Crypt::Passphrase> object, and a hash string. You probably want to use the C<curry_with_hash> or C<curry_with_password> methods on C<Crypt::Passphrase> instead of calling this directly.
 
 =method verify_password($password)
 
@@ -47,4 +47,12 @@ Check if the hash needs to be rehashed.
 
 =method raw_hash()
 
-This returns the hash of this object as a string.
+This returns the hash contained in this object as a string.
+
+=head1 SEE ALSO
+
+=over 4
+
+=item * L<DBIx::Class::CryptColumn|DBIx::Class::CryptColumn>
+
+=back
