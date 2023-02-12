@@ -21,7 +21,7 @@ sub verify_password {
 
 1;
 
-# ABSTRACT: Validate against hexed MD5 hashes with Crypt::Passphrase
+# ABSTRACT: Validate against hexed SHA1 hashes with Crypt::Passphrase
 
 =head1 DESCRIPTION
 
@@ -33,7 +33,7 @@ This creates a new SHA1 validator. It takes no arguments.
 
 =method accepts_hash($hash)
 
-This (heuristically) determines if we may be dealing with a hex encoded md5 sum.
+This (heuristically) determines if we may be dealing with a hex encoded sha1 sum.
 
 =method verify_hash($password, $hash)
 
