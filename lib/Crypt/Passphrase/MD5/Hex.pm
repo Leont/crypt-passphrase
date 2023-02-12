@@ -16,7 +16,7 @@ sub accepts_hash {
 
 sub verify_password {
 	my ($self, $password, $hash) = @_;
-	return md5_hex($password) eq $hash;
+	return md5_hex($password) eq lc $hash;
 }
 
 1;
