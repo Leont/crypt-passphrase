@@ -248,3 +248,15 @@ A FIPS-standardized hashing algorithm. Only recommended when FIPS-compliance is 
 
 =back
 
+A number of integrations of Crypt::Passphrase exist:
+
+=over 4
+
+=item * L<DBIx::Class::CryptColumn|DBIx::Class::CryptColumn>
+
+=item * L<Mojolicious::Plugin::Passphrase|Mojolicious::Plugin::Passphrase>
+
+=item * L<Dancer2::Plugin::CryptPassphrase|Dancer2::Plugin::CryptPassphrase>
+
+=back
+
