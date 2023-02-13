@@ -51,7 +51,7 @@ sub _load_validator {
 		return Crypt::Passphrase::Fallback->new(callback => $validator);
 	}
 	else {
-		return _load_extension($validator);
+		return _load_extension($validator)->new;
 	}
 }
 
