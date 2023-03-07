@@ -236,15 +236,19 @@ This is a state-of-the-art memory-hard password hashing algorithm, recommended f
 
 =item * L<Crypt::Passphrase::Bcrypt|Crypt::Passphrase::Bcrypt>
 
-And older but still safe password hashing algorithm, recommended for lower-end parameters.
-
-=item * L<Crypt::Passphrase::Scrypt|Crypt::Passphrase::Scrypt>
-
-A first-generation memory-hard algorithm.
+And older but still safe password hashing algorithm, recommended for lower-end parameters or if you need to be compatible with BSD system passwords.
 
 =item * L<Crypt::Passphrase::PBKDF2|Crypt::Passphrase::PBKDF2>
 
 A FIPS-standardized hashing algorithm. Only recommended when FIPS-compliance is required.
+
+=item * L<Crypt::Passphrase::Linux|Crypt::Passphrase::Linux>
+
+An implementation of SHA-512, SHA256 and MD5 based C<crypt()>. Recommended if you need to be compatible with Linux system passwords.
+
+=item * L<Crypt::Passphrase::Scrypt|Crypt::Passphrase::Scrypt>
+
+A first-generation memory-hard algorithm, Argon2 is recommended instead if you want a memory-hard algorithm.
 
 =back
 
