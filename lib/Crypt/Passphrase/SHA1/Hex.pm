@@ -25,11 +25,11 @@ sub verify_password {
 
 =head1 DESCRIPTION
 
-This module implements a validator
+This module implements a validator for hex-encoded SHA-1 hashes.
 
 =method new()
 
-This creates a new SHA1 validator. It takes no arguments.
+This creates a new SHA-1 validator. It takes no arguments.
 
 =method accepts_hash($hash)
 
