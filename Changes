@@ -1,6 +1,8 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+
+0.008     2023-03-07 23:51:24+01:00 Europe/Amsterdam
           - Always instantiate validators
           - Add secure_compare method to Validator
 
