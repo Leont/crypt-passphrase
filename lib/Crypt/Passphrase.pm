@@ -99,7 +99,7 @@ sub verify_password {
 		}
 	}
 
-	return;
+	return 0;
 }
 
 sub curry_with_hash {
