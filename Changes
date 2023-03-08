@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Be more permissive in allowed crypt identifiers
 
 0.008     2023-03-07 23:51:24+01:00 Europe/Amsterdam
           - Always instantiate validators

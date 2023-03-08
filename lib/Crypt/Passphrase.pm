@@ -86,7 +86,7 @@ sub hash_password {
 
 sub needs_rehash {
 	my ($self, $hash) = @_;
-	return 1 if $hash !~ / \A \$ (\w+) \$ /x;
+	return 1 if $hash !~ / \A \$ ([^\$]+) \$ /x;
 	return $self->{encoder}->needs_rehash($hash);
 }
 
