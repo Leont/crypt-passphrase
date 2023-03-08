@@ -3,10 +3,10 @@ package Crypt::Passphrase;
 use strict;
 use warnings;
 
-use Carp 'croak';
-use Scalar::Util 'blessed';
-use Encode 'encode';
-use Unicode::Normalize 'normalize';
+use Carp ();
+use Scalar::Util ();
+use Encode ();
+use Unicode::Normalize ();
 
 sub _load_extension {
 	my $name = shift;
@@ -19,7 +19,7 @@ sub _load_extension {
 
 sub _load_encoder {
 	my $encoder = shift;
-	if (blessed $encoder) {
+	if (Scalar::Util::blessed($encoder)) {
 		return $encoder;
 	}
 	elsif (ref $encoder) {
@@ -32,13 +32,13 @@ sub _load_encoder {
 		return $encoder_module->new;
 	}
 	else {
-		croak 'No encoder given to Crypt::Passphrase->new';
+		Carp::croak('No encoder given to Crypt::Passphrase->new');
 	}
 }
 
 sub _load_validator {
 	my $validator = shift;
-	if (blessed $validator) {
+	if (Scalar::Util::blessed($validator)) {
 		return $validator;
 	}
 	elsif (ref($validator) eq 'HASH') {
@@ -61,7 +61,7 @@ sub new {
 	my $encoder = _load_encoder($args{encoder});
 	my @validators = map { _load_validator($_) } @{ $args{validators} };
 	my $normalization = $args{normalization} || 'C';
-	croak "Invalid normalization form $normalization" if not $valid{$normalization};
+	Carp::croak("Invalid normalization form $normalization") if not $valid{$normalization};
 
 	my $self = bless {
 		encoder       => $encoder,
@@ -74,7 +74,8 @@ sub new {
 
 sub _normalize_password {
 	my ($self, $password) = @_;
-	return encode('utf-8-strict', normalize($self->{normalization}, $password));
+	my $normalized = Unicode::Normalize::normalize($self->{normalization}, $password);
+	return Encode::encode('utf-8-strict', $normalized);
 }
 
 sub hash_password {
