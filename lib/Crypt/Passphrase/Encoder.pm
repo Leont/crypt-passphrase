@@ -5,7 +5,6 @@ use warnings;
 
 use parent 'Crypt::Passphrase::Validator';
 
-use Carp 'croak';
 use Crypt::URandom;
 
 sub random_bytes {
