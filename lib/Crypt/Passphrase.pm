@@ -74,7 +74,7 @@ sub new {
 
 sub _normalize_password {
 	my ($self, $password) = @_;
-	my $normalized = Unicode::Normalize::normalize($self->{normalization}, $password);
+	my $normalized = Unicode::Normalize::normalize($self->{normalization}, $password // '');
 	return Encode::encode('utf-8-strict', $normalized);
 }
 
