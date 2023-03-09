@@ -29,6 +29,8 @@ sub raw_hash {
 
 1;
 
+# ABSTRACT: An object representing a hash for password checking
+
 =head1 DESCRIPTION
 
 This class can be useful for plugging C<Crypt::Passphrase> into some frameworks (e.g. ORMs) that require a singular object to contain everything you need to match passwords against. Effectively it's little more or less than currying the C<$hash> parameter to C<verify_password> and C<needs_rehash>.
