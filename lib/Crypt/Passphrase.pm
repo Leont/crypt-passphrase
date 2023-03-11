@@ -201,10 +201,6 @@ Calling this only ever makes sense after a password has been verified.
 
 This creates a C<Crypt::Passphrase::PassphraseHash> object for the hash, effectively currying C<Crypt::Passphrase> with that hash. This can be useful for plugging C<Crypt::Passphrase> into some frameworks (e.g. ORMs) that require a singular object to contain everything you need to match passwords against.
 
-=method curry_with_password($password)
-
-This method is like C<curry_with_hash>, but takes a password and hashes that first.
-
 =head1 TIPS AND TRICKS
 
 =head2 Custom configurations
@@ -265,3 +261,8 @@ A number of integrations of Crypt::Passphrase exist:
 
 =back
 
+=begin Pod::Coverage
+
+curry_with_password
+
+=end Pod::Coverage

@@ -2,6 +2,7 @@ Revision history for Crypt-Passphrase
 
 {{$NEXT}}
           - More gracefully handle undefined passwords
+          - Depreciate curry_with_password
 
 0.009     2023-03-09 01:04:14+01:00 Europe/Amsterdam
           - Be more permissive in allowed crypt identifiers
