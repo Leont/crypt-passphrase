@@ -257,11 +257,15 @@ The following encoders are currently available on CPAN:
 
 =item * L<Crypt::Passphrase::Argon2|Crypt::Passphrase::Argon2>
 
-This is a state-of-the-art memory-hard password hashing algorithm, recommended for higher-end parameters.
+This is a state-of-the-art memory-hard password hashing algorithm, recommended for higher-end parameters. Winner of the Password Hash Competition of 2015.
 
 =item * L<Crypt::Passphrase::Bcrypt|Crypt::Passphrase::Bcrypt>
 
 And older but still safe password hashing algorithm, recommended for lower-end parameters or if you need to be compatible with BSD system passwords.
+
+=item * L<Crypt::Passphrase::Yescrypt|Crypt::Passphrase::Yescrypt>
+
+Another state-of-the-art memory-hard password hashing algorithm. Finalist of the Password Hash Competition of 2015 and used in some recent Linux distributions for user passwords.
 
 =item * L<Crypt::Passphrase::PBKDF2|Crypt::Passphrase::PBKDF2>
 
@@ -269,7 +273,7 @@ A FIPS-standardized hashing algorithm. Only recommended when FIPS-compliance is 
 
 =item * L<Crypt::Passphrase::Linux|Crypt::Passphrase::Linux>
 
-An implementation of SHA-512, SHA256 and MD5 based C<crypt()>. Recommended if you need to be compatible with Linux system passwords.
+An implementation of SHA-512, SHA256 and MD5 based C<crypt()>. Recommended if you need to be compatible with standard Linux system passwords.
 
 =item * L<Crypt::Passphrase::Scrypt|Crypt::Passphrase::Scrypt>
 
