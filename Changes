@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Add @CARP_NOT handler to import
           - More gracefully handle undefined passwords
           - Depreciate curry_with_password
 

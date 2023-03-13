@@ -8,6 +8,34 @@ use Scalar::Util ();
 use Encode ();
 use Unicode::Normalize ();
 
+our @CARP_NOT;
+sub import {
+	my ($class, @args) = @_;
+	for my $arg (@args) {
+		my $caller = caller;
+		if ($arg eq '-encoder') {
+			require Crypt::Passphrase::Encoder;
+			no strict 'refs';
+			no warnings 'once';
+			push @{"$caller\::ISA"}, 'Crypt::Passphrase::Encoder';
+			push @{"$caller\::CARP_NOT"}, __PACKAGE__;
+		}
+		elsif ($arg eq '-validator') {
+			require Crypt::Passphrase::Validator;
+			no strict 'refs';
+			no warnings 'once';
+			push @{"$caller\::ISA"}, 'Crypt::Passphrase::Validator';
+			push @{"$caller\::CARP_NOT"}, __PACKAGE__;
+		}
+		elsif ($arg eq '-integration') {
+			push @CARP_NOT, $caller;
+		}
+		else {
+			Carp::croak("Unknown import argument $arg");
+		}
+	}
+}
+
 sub _load_extension {
 	my $name = shift;
 	$name =~ s/^(?!\+)/Crypt::Passphrase::/;

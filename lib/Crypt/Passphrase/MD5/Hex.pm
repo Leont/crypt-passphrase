@@ -1,6 +1,6 @@
 package Crypt::Passphrase::MD5::Hex;
 
-use parent 'Crypt::Passphrase::Validator';
+use Crypt::Passphrase -validator;
 
 use Digest::MD5 'md5_hex';
 

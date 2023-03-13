@@ -3,7 +3,7 @@ package Crypt::Passphrase::Fallback;
 use strict;
 use warnings;
 
-use parent 'Crypt::Passphrase::Validator';
+use Crypt::Passphrase -validator;
 
 sub new {
 	my ($class, %args) = @_;

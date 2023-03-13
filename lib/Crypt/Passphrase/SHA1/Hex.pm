@@ -1,6 +1,6 @@
 package Crypt::Passphrase::SHA1::Hex;
 
-use parent 'Crypt::Passphrase::Validator';
+use Crypt::Passphrase -validator;
 
 use Digest::SHA 'sha1_hex';
 
