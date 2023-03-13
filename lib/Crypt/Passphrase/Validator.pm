@@ -27,6 +27,8 @@ This method returns true if this validator is able to process a hash. Typically 
 
 This checks if a C<$password> satisfies C<$hash>.
 
+It provides the following helper method:
+
 =method secure_compare($left, $right)
 
 This compares two strings in a way that resists timing attacks.
