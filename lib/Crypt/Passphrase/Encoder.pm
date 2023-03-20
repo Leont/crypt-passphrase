@@ -12,9 +12,7 @@ sub random_bytes {
 	return Crypt::URandom::urandom($count);
 }
 
-sub crypt_subtypes {
-	return;
-}
+sub crypt_subtypes;
 
 sub accepts_hash {
 	my ($self, $hash) = @_;
