@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Allow descrypt to not need rehash
 
 0.011     2023-03-21 14:30:32+01:00 Europe/Amsterdam
           - Add Crypt::Passphrase::System
