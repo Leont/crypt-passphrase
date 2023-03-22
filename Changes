@@ -1,6 +1,8 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+
+0.012     2023-03-22 12:32:01+01:00 Europe/Amsterdam
           - Allow descrypt to not need rehash
 
 0.011     2023-03-21 14:30:32+01:00 Europe/Amsterdam
