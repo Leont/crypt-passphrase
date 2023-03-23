@@ -150,7 +150,7 @@ sub curry_with_password {
 
  my $authenticator = Crypt::Passphrase->new(
      encoder    => 'Argon2',
-     validators => [ 'Bcrypt' ],
+     validators => [ 'Bcrypt', 'SHA1::Hex' ],
  );
 
  my ($hash) = $dbh->selectrow_array("SELECT password FROM users WHERE name = ?", {}, $user);

@@ -1,8 +1,11 @@
 package Crypt::Passphrase::MD5::Hex;
 
+use strict;
+use warnings;
+
 use Crypt::Passphrase -validator;
 
-use Digest::MD5 'md5_hex';
+use Digest::MD5 'md5';
 
 sub new {
 	my $class = shift;
@@ -11,12 +14,12 @@ sub new {
 
 sub accepts_hash {
 	my ($self, $hash) = @_;
-	return $hash =~ / ^ [A-Fa-f0-9]{32} $/x;
+	return $hash =~ / ^ [a-f0-9]{32} $/xi;
 }
 
 sub verify_password {
 	my ($self, $password, $hash) = @_;
-	return md5_hex($password) eq lc $hash;
+	return md5($password) eq pack('H32', $hash);
 }
 
 1;
