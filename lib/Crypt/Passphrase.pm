@@ -248,7 +248,7 @@ Hashing passwords is by its nature a heavy operations. It can be abused by malig
 
 In some situations, it may be appropriate to have different password settings for different users (e.g. set them more strict for administrators than for ordinary users).
 
-=head1 SEE ALSO
+=head1 BACKENDS
 
 The following encoders are currently available on CPAN:
 
@@ -278,7 +278,13 @@ An implementation of SHA-512, SHA256 and MD5 based C<crypt()>. Recommended if yo
 
 A first-generation memory-hard algorithm, Argon2 is recommended instead if you want a memory-hard algorithm.
 
+=item * L<Crypt::Passphrase::System|Crypt::Passphrase::System>
+
+Your system's C<crypt> implementation. Support for various algorithms varies between platforms and platform versions, and while on some platforms it's a good backend one should not rely on this for a portable result.
+
 =back
+
+=head1 INTEGRATIONS
 
 A number of integrations of Crypt::Passphrase exist:
 
