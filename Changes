@@ -1,6 +1,8 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+
+0.013     2023-03-29 14:53:58+02:00 Europe/Amsterdam
           - Add SHA::Base64 and MD5::Base64 validators
 
 0.012     2023-03-22 12:32:01+01:00 Europe/Amsterdam
