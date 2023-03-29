@@ -19,14 +19,14 @@ sub import {
 			require Crypt::Passphrase::Encoder;
 			no strict 'refs';
 			no warnings 'once';
-			push @{"$caller\::ISA"}, 'Crypt::Passphrase::Encoder';
+			push @{"$caller\::ISA"}, 'Crypt::Passphrase::Encoder' unless $caller->isa('Crypt::Passphrase::Encoder');
 			push @{"$caller\::CARP_NOT"}, __PACKAGE__, mro::get_linear_isa($caller);
 		}
 		elsif ($arg eq '-validator') {
 			require Crypt::Passphrase::Validator;
 			no strict 'refs';
 			no warnings 'once';
-			push @{"$caller\::ISA"}, 'Crypt::Passphrase::Validator';
+			push @{"$caller\::ISA"}, 'Crypt::Passphrase::Validator' unless $caller->isa('Crypt::Passphrase::Validator');
 			push @{"$caller\::CARP_NOT"}, __PACKAGE__, mro::get_linear_isa($caller);
 		}
 		elsif ($arg eq '-integration') {
