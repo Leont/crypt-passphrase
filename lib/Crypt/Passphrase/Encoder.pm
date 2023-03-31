@@ -24,6 +24,10 @@ sub accepts_hash {
 	return $hash =~ $self->{accepts_hash};
 }
 
+sub binary_safe {
+	return 1;
+}
+
 1;
 
 #ABSTRACT: Base class for Crypt::Passphrase encoders
@@ -43,6 +47,10 @@ This method will return true if the password needs a rehash. This may either mea
 =method crypt_subtypes()
 
 This method returns the types of crypt entries this validator supports. This is used to implement C<accepts_hash>.
+
+=method binary_safe()
+
+This method returns true if the encoder can take arbitrary binary inputs.
 
 =method random_bytes($count)
 
