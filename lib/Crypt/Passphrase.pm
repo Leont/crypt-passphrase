@@ -280,6 +280,10 @@ A first-generation memory-hard algorithm, Argon2 is recommended instead if you w
 
 Your system's C<crypt> implementation. Support for various algorithms varies between platforms and platform versions, and while on some platforms it's a good backend one should not rely on this for a portable result.
 
+=item * L<Crypt::Passphrase::Pepper::Simple|Crypt::Passphrase::Pepper::Simple>
+
+A meta-encoder that adds peppering to your passwords by pre-hashing the inputs.
+
 =back
 
 =head1 INTEGRATIONS
