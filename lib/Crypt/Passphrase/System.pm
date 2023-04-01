@@ -63,7 +63,7 @@ sub new {
 sub hash_password {
 	my ($self, $password) = @_;
 	my $salt = $self->random_bytes($self->{salt_size});
-	(my $encoded_salt = encode_base64($salt, "")) =~ tr{A-Za-z0-9+/=}{./0-9A-Za-z}d;
+	my $encoded_salt = encode_base64($salt, "") =~ tr{A-Za-z0-9+/=}{./0-9A-Za-z}dr;
 	return crypt($password, "$self->{settings}$encoded_salt\$");
 }
 

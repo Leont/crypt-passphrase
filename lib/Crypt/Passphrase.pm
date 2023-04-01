@@ -39,12 +39,11 @@ sub import {
 }
 
 sub _load_extension {
-	my $name = shift;
-	$name =~ s/^(?!\+)/Crypt::Passphrase::/;
-	$name =~ s/^\+//;
-	(my $filename = "$name.pm") =~ s{::}{/}g;
-	require $filename;
-	return $name;
+	my $short_name = shift;
+	my $module_name = $short_name =~ s/^(\+)?/$1 ? '' : 'Crypt::Passphrase::'/re;
+	my $file_name = "$module_name.pm" =~ s{::}{/}gr;
+	require $file_name;
+	return $module_name;
 }
 
 sub _load_encoder {
