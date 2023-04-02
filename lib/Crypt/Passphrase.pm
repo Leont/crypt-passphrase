@@ -56,12 +56,8 @@ sub _load_encoder {
 		my $encoder_module = _load_extension(delete $encoder_conf{module});
 		return $encoder_module->new(%encoder_conf);
 	}
-	elsif ($encoder) {
-		my $encoder_module = _load_extension($encoder);
-		return $encoder_module->new;
-	}
 	else {
-		Carp::croak('No encoder given to Crypt::Passphrase->new');
+		return _load_extension($encoder)->new;
 	}
 }
 
@@ -87,6 +83,7 @@ sub _load_validator {
 my %valid = map { $_ => 1 } qw/C D KC KD/;
 sub new {
 	my ($class, %args) = @_;
+	Carp::croak('No encoder given to Crypt::Passphrase->new') if not $args{encoder};
 	my $encoder = _load_encoder($args{encoder});
 	my @validators = map { _load_validator($_) } @{ $args{validators} };
 	my $normalization = $args{normalization} || 'C';
