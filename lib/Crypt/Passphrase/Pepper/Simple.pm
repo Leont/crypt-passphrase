@@ -21,7 +21,7 @@ sub new {
 	my ($class, %args) = @_;
 
 	my $peppers = $args{peppers} or croak('No peppers given');
-	$args{active} //= (sort { no warnings 'numeric'; $b <=> $a || $b cmp $a } keys %{ $peppers })[0];
+	$args{active} //= (sort {; no warnings 'numeric'; $b <=> $a || $b cmp $a } keys %{ $peppers })[0];
 	$args{algorithm} //= 'sha512-hmac';
 
 	return $class->SUPER::new(%args);
@@ -36,7 +36,7 @@ sub prehash_password {
 
 1;
 
-#ABSTRACT: An pepper-wrapper for Crypt::Passphrase
+#ABSTRACT: A pepper-wrapper for Crypt::Passphrase
 
 =head1 SYNOPSIS
 

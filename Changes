@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Fix compilation issue on perls < 5.22.0
 
 0.014     2023-04-03 16:43:30+02:00 Europe/Amsterdam
           - Add Crypt::Passphrase::Pepper::Simple
