@@ -25,8 +25,18 @@ sub new {
 
 sub _to_inner {
 	my $hash = shift;
-	$hash =~ s/ (?<= \A \$) peppered-(\w+) \$ v=1 , alg=([^\$,]+) , id=([^\$,]+) /$1/x or return;
-	return ($hash, $2, $3);
+	if ($hash =~ s/ (?<= \A \$) ([\w-]+?)-pepper-([\w-]+) \$ v=1 , id=([^\$,]+) /$1/x) {
+		return ($hash, $2, $3);
+	} elsif ($hash =~ s/ (?<= \A \$) peppered-(\w+) \$ v=1 , alg=([^\$,]+) , id=([^\$,]+) /$1/x) {
+		return ($hash, $2, $3);
+	} else {
+		return;
+	}
+}
+
+sub supported_hashes {
+	my $self = shift;
+	@{ $self->{supported_hashes} || [] };
 }
 
 sub prehash_password;
@@ -37,12 +47,17 @@ sub hash_password {
 	my $prehashed = $self->prehash_password($password, $self->{algorithm}, $self->{active});
 	my $wrapped = encode_base64($prehashed, '') =~ tr/=//dr;
 	my $hash = $self->{inner}->hash_password($wrapped);
-	return $hash =~ s/ (?<= \A \$) ([^\$]+) /peppered-$1\$v=1,alg=$self->{algorithm},id=$self->{active}/rx;
+	return $hash =~ s/ (?<= \A \$) ([^\$]+) /$1-pepper-$self->{algorithm}\$v=1,id=$self->{active}/rx;
 }
 
 sub crypt_subtypes {
 	my $self = shift;
-	return map { ("peppered-$_", $_) } $self->{inner}->crypt_subtypes;
+	my @result;
+	my @supported = $self->supported_hashes;
+	for my $inner ($self->{inner}->crypt_subtypes) {
+		push @result, $inner, map { "$inner-pepper-$_" } @supported
+	}
+	return @result;
 }
 
 sub needs_rehash {
@@ -89,8 +104,12 @@ This returns true if the hash uses a different cipher or pepper, or if any of th
 
 =method crypt_subtypes()
 
-This class supports all the types supported by the underlaying encoder, with or without a C<peppered-> prefix.
+This returns all the types supported by the underlaying encoder cross joined with all supported hashes using the string C<"-pepper-"> (e.g. C<"argon2id-pepper-sha512-hmac">), as well as the underlaying types themselves.
 
 =method verify_password($password, $hash)
 
 This will check if a password matches the hash, supporting both peppered and unpeppered hashed with the encoder.
+
+=method supported_hashes()
+
+This returns the hashes that are supported for prehashing.

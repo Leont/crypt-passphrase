@@ -23,6 +23,7 @@ sub new {
 	my $peppers = $args{peppers} or croak('No peppers given');
 	$args{active} //= (sort {; no warnings 'numeric'; $b <=> $a || $b cmp $a } keys %{ $peppers })[0];
 	$args{algorithm} //= 'sha512-hmac';
+	$args{supported_hashes} //= [ keys %algorithms ];
 
 	return $class->SUPER::new(%args);
 }
