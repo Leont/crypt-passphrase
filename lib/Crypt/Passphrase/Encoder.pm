@@ -5,11 +5,51 @@ use warnings;
 
 use parent 'Crypt::Passphrase::Validator';
 
-use Crypt::URandom 0.37;
+use Carp ();
+use Errno ();
 
-sub random_bytes {
-	my ($self, $count) = @_;
-	return Crypt::URandom::urandom_ub($count);
+if ($^O eq 'MSWin32') {
+	eval <<'END' or die $@;
+	require Win32::API;
+	my $genrand = Win32::API->new('advapi32', 'INT SystemFunction036(PVOID RandomBuffer, ULONG RandomBufferLength)')
+		or Carp::croak("Could not import SystemFunction036: $^E");
+	sub random_bytes {
+		my (undef, $count) = @_;
+		my $buffer = chr(0) x $count;
+		$genrand->Call($buffer, $count) or Carp::croak("Could not read from csprng: $^E");
+		return $buffer;
+	}
+	1;
+END
+} elsif (eval { require Sys::GetRandom }) {
+	eval <<'END' or die $@;
+	sub random_bytes {
+		my (undef, $count) = @_;
+		my ($result, $offset) = ('', 0);
+		do {
+			my $read = Sys::GetRandom::getrandom($result, $count - $offset, 0, $offset);
+			Carp::croak("Couldn't read from csprng: $!") if not defined $read and $! != Errno::EINTR;
+			$offset += $read // 0;
+		} while ($offset < $count);
+		return $result;
+	}
+	1;
+END
+} else {
+	eval <<'END' or die $@;
+	open my $urandom, '<:raw', '/dev/urandom' or Carp::croak("Couldn't open /dev/urandom: $!");
+	sub random_bytes {
+		my (undef, $count) = @_;
+		my ($result, $offset) = ('', 0);
+		do {
+			my $read = sysread $urandom, $result, $count - $offset, $offset;
+			Carp::croak("Couldn't read from csprng: $!") if not defined $read and $! != Errno::EINTR;
+			$offset += $read // 0;
+		} while ($offset < $count);
+		return $result;
+	}
+	1;
+END
 }
 
 sub crypt_subtypes;
