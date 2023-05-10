@@ -5,11 +5,11 @@ use warnings;
 
 use parent 'Crypt::Passphrase::Validator';
 
-use Crypt::URandom;
+use Crypt::URandom 0.037;
 
 sub random_bytes {
 	my ($self, $count) = @_;
-	return Crypt::URandom::urandom($count);
+	return Crypt::URandom::urandom_ub($count);
 }
 
 sub crypt_subtypes;
