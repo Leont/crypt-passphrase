@@ -1,0 +1,27 @@
+name: smoke-windows-strawberryperl
+
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  perl:
+
+    runs-on: windows-latest
+
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@master
+        with:
+            fetch-depth: 10
+      - name: cpan Crypt::URandom
+        run: cpan Crypt::URandom
+      - name: Run Tests
+        shell: cmd
+        run: |
+            path C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;%PATH%
+            prove -l t
