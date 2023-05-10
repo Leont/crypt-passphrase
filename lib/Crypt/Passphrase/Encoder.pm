@@ -5,11 +5,31 @@ use warnings;
 
 use parent 'Crypt::Passphrase::Validator';
 
-use Crypt::URandom 0.37;
+use Carp ();
+
+my $csprng = ($^O eq 'MSWin32') ?
+do {
+	require Win32::API;
+	my $genrand = Win32::API->new('advapi32', 'INT SystemFunction036(PVOID RandomBuffer, ULONG RandomBufferLength)') or Carp::croak("Could not import SystemFunction036: $^E");
+	sub {
+		my $count = shift;
+		my $buffer = chr(0) x $count;
+		$genrand->Call($buffer, $count) or Carp::croak("Could not read from csprng: $^E");
+		return $buffer;
+	}
+} :
+do {
+	open my $urandom, '<:raw', '/dev/urandom' or Carp::croak("Couldn't open /dev/urandom: $!");
+	sub {
+		my $count = shift;
+		sysread $urandom, my $buffer, $count or Carp::croak("Couldn't read from csprng: $!");
+		return $buffer;
+	}
+};
 
 sub random_bytes {
 	my ($self, $count) = @_;
-	return Crypt::URandom::urandom_ub($count);
+	return $csprng->($count);
 }
 
 sub crypt_subtypes;
