@@ -43,11 +43,8 @@ sub prehash_password {
 
  my $passphrase = Crypt::Passphrase->new(
      encoder => {
-         module => 'Pepper::Simple',
-         inner => {
-             module      => 'Argon2',
-             output_size => 32,
-         },
+         module  => 'Pepper::Simple',
+         inner   => 'Bcrypt',
          peppers => {
              1 => pack('H*', '0123456789ABCDEF...'),
              2 => pack('H*', 'FEDCBA9876543210...'),
