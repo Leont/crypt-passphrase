@@ -88,7 +88,7 @@ sub verify_password {
 
 =head1 DESCRIPTION
 
-This is a base-class for pre-peppering implementations. You probably want to use L<Crypt::Passphrase::Pepper::Basic> instead.
+This is a base-class for pre-peppering implementations. You probably want to use L<Crypt::Passphrase::Pepper::Simple> instead.
 
 =method new(%args)
 
