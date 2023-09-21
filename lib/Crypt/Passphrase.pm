@@ -210,7 +210,7 @@ This sets the unicode normalization form used for the password. Valid values are
 
 =method hash_password($password)
 
-This will hash a password with the encoder cipher, and return it (in crypt format). This will generally use a salt, and as such will return a different value each time even when called with the same password.
+This will hash a password with the encoder cipher, and return it (in L<PHC string format|https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md>). This will generally use a salt, and as such will return a different value each time even when called with the same password.
 
 =method verify_password($password, $hash)
 
