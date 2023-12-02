@@ -36,6 +36,7 @@ sub import {
 			Carp::croak("Unknown import argument $arg");
 		}
 	}
+	return;
 }
 
 sub _load_extension {

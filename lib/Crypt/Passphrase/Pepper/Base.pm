@@ -36,7 +36,7 @@ sub _to_inner {
 
 sub supported_hashes {
 	my $self = shift;
-	@{ $self->{supported_hashes} || [] };
+	return @{ $self->{supported_hashes} || [] };
 }
 
 sub prehash_password;
@@ -55,7 +55,7 @@ sub crypt_subtypes {
 	my @result;
 	my @supported = $self->supported_hashes;
 	for my $inner ($self->{inner}->crypt_subtypes) {
-		push @result, $inner, map { "$inner-pepper-$_" } @supported
+		push @result, $inner, map { "$inner-pepper-$_" } @supported;
 	}
 	return @result;
 }

@@ -19,7 +19,7 @@ sub accepts_hash {
 
 sub verify_password {
 	my ($self, $password, $hash) = @_;
-	return md5($password) eq pack('H32', $hash);
+	return md5($password) eq pack 'H32', $hash;
 }
 
 1;

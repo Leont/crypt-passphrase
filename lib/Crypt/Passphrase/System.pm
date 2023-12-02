@@ -20,10 +20,10 @@ my @possibilities = (
 	['y' , '$y$j8T$'          , 16, '$y$j9T$F5Jx5fExrKuPp53xLKQ..1$tnSYvahCwPBHKZUspmcxMfb0.WiB9W.zEaKlOBL35rC'                       ],
 );
 
-my (%algorithm, %salt_for, $default);
+my (%algorithm, $default);
 for my $row (@possibilities) {
 	my ($name, $setting, $salt_size, $value) = @{$row};
-	my $hash = eval { crypt('password', $value) };
+	my $hash = eval { crypt 'password', $value };
 	if (defined $hash and $hash eq $value) {
 		$algorithm{$name} = { settings => $setting, salt_size => $salt_size };
 		$default = $name;
@@ -66,7 +66,7 @@ sub _encode_crypt64 {
 	my $npadbytes = 2 - ($nbytes + 2) % 3;
 	$bytes .= "\0" x $npadbytes;
 	my $digits = '';
-	for(my $i = 0; $i < $nbytes; $i += 3) {
+	for (my $i = 0; $i < $nbytes; $i += 3) {
 		my $v = ord(substr $bytes, $i, 1) |
 			(ord(substr $bytes, $i + 1, 1) << 8) |
 			(ord(substr $bytes, $i + 2, 1) << 16);
@@ -84,7 +84,7 @@ sub hash_password {
 	my ($self, $password) = @_;
 	my $salt = $self->random_bytes($self->{salt_size});
 	my $encoded_salt = _encode_crypt64($salt);
-	return crypt($password, "$self->{settings}$encoded_salt\$");
+	return crypt $password, "$self->{settings}$encoded_salt\$";
 }
 
 my $descrypt = qr{ \A [./0-9A-Za-z]{13} \z }x;
@@ -105,7 +105,7 @@ sub needs_rehash {
 
 sub verify_password {
 	my ($class, $password, $hash) = @_;
-	my $new_hash = crypt($password, $hash);
+	my $new_hash = crypt $password, $hash;
 	return $class->secure_compare($hash, $new_hash);
 }
 
