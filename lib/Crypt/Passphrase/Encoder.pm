@@ -32,19 +32,48 @@ sub accepts_hash {
 
 This is a base class for password encoders. It is a subclass of C<Crypt::Passphrase::Validator>.
 
-=method hash_password($password)
+=head1 SUBCLASSING
 
-This hashes a password. Note that this will return a new value each time since it uses a unique hash every time.
+=head2 MANDATORY METHODS
 
-=method needs_rehash($hash)
+It expects the subclass to implement the following four methods:
 
-This method will return true if the password needs a rehash. This may either mean it's using a different hashing algoritm, or because it's using different parameters. This should be overloaded in your subclass.
+=head3 hash_password
 
-=method crypt_subtypes()
+ $encoder->hash_password($password)
+
+This hashes a C<$password>. Note that this will typically return a different value each time since it uses a unique salt every time.
+
+=head3 verify_password
+
+ $encoder->verify_password($password, $hash)
+
+This checks if a C<$password> satisfies C<$hash>.
+
+=head3 needs_rehash
+
+ $encoder->needs_rehash($hash)
+
+This method will return true if the password hash needs a rehash. This may either mean it's using a different hashing algoritm, or because it's using different parameters.
+
+=head3 crypt_subtypes
+
+ $encoder->crypt_subtypes
 
 This method returns the types of crypt entries this validator supports. This is used to implement C<accepts_hash>.
 
-=method random_bytes($count)
+=head2 PROVIDED METHODS
 
-This is a utility method provided by the base class to aid in generating a good salt.
+It provides the following methods to aid in implementing encoders:
 
+=head3 random_bytes
+
+ $encoder->random_bytes($count)
+
+This is a utility method to aid in generating a good salt.
+
+=head3 secure_compare
+
+ $encoder->secure_compare($left, $right)
+
+This compares two strings in a way that resists timing attacks.

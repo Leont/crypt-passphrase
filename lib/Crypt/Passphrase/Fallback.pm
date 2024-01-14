@@ -27,18 +27,34 @@ sub verify_password {
 
 #ABSTRACT: a fallback validator for Crypt::Passphrase
 
-=method new(%args)
+=head1 SYNOPSIS
 
-This method takes two named arguments
+ sub plaintext {
+	my ($password, $hash) = @_;
+	return $password eq $hash;
+ }
+
+ my $passphrase = Crypt::Passphrase->new(
+     encoder    => 'Argon2',
+     validators => [ \&plaintext ],
+ );
+
+=head1 DESCRIPTION
+
+This is a helper class to write ad-hoc validators. If passing a subref as a validator C<Crypt::Passphrase> will automatically wrap it in a fallback object, but it can also passed explicitly.
+
+=head1 CONFIGURATION
+
+This takes two named arguments:
 
 =over 4
 
 =item * callback
 
-The C<verify_password> method will call this with the password and the hash, and return its return value.
+The C<verify_password> method will call this with the password and the hash, and return its return value. C<This is mandatory>.
 
 =item * acceptor
 
-This callback will decide if this object will take a hash. By default it accepts anything.
+This callback will decide if this object will try to match a hash. By default it always return true (so always accepts 
 
 =back

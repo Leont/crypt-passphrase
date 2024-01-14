@@ -17,18 +17,32 @@ sub secure_compare {
 
 =head1 DESCRIPTION
 
-This is a base class for validators. It requires any subclass to implement the following two methods:
+This is a base class for validators.
 
-=method accepts_hash($hash)
+=head1 SUBCLASSING
+
+=head2 Mandatory methods
+
+It expects the subclass to implement the following methods:
+
+=head3 accepts_hash
+
+ $validator->accepts_hash($hash)
 
 This method returns true if this validator is able to process a hash. Typically this means that it's crypt identifier matches that of the validator.
 
-=method verify_password($password, $hash)
+=head3 verify_password
+
+ $validator->verify_password($password, $hash)
 
 This checks if a C<$password> satisfies C<$hash>.
 
+=head2 Provided methods
+
 It provides the following helper method:
 
-=method secure_compare($left, $right)
+=head3 secure_compare
+
+ $validator->secure_compare($left, $right)
 
 This compares two strings in a way that resists timing attacks.

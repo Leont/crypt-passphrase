@@ -2,6 +2,7 @@ Revision history for Crypt-Passphrase
 
 {{$NEXT}}
           - Use unbuffered randomness
+          - Reorganize documentation
 
 0.016     2023-05-03 19:19:41+02:00 Europe/Amsterdam
           - Make pepper algorithm part of crypt identifiers

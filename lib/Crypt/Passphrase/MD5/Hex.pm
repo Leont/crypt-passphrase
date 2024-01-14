@@ -26,18 +26,15 @@ sub verify_password {
 
 # ABSTRACT: Validate against hexed MD5 hashes with Crypt::Passphrase
 
+=head1 SYNOPSIS
+
+ my $passphrase = Crypt::Passphrase->new(
+     encoder    => 'Bcrypt',
+     validators => [ 'MD5::Hex' ],
+ );
+
 =head1 DESCRIPTION
 
-This module implements a validator for hex-encoded MD5 hashes.
+This module implements a validator for base64-encoded MD5 hashes.
 
-=method new()
-
-This creates a new MD5 validator. It takes no arguments.
-
-=method accepts_hash($hash)
-
-This (heuristically) determines if we may be dealing with a hex encoded md5 sum.
-
-=method verify_hash($password, $hash)
-
-This determines if the password matches the hash when MD5'ed.
+This has no configuration and will try to match any value that looks like 16 bytes encoded in hex.

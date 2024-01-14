@@ -85,26 +85,30 @@ sub verify_password {
 
 This is a base-class for pre-peppering implementations. You probably want to use L<Crypt::Passphrase::Pepper::Simple> instead.
 
-=method new(%args)
+=head1 SUBCLASSING
 
-This creates a new C<Crypt::Passphrase::Pepper::Base>. As it's an abstract class you shouldn't call this unless you're writing a subclass.
+=head2 Creation
 
-=method hash_password($password)
+Any subclass is expected to call this class' method new with at least the following arguments.
 
-This hashes the passwords with the active pepper.
+=head3 inner
 
-=method needs_rehash($hash)
+This must contain an encoder specification identical to the C<encoder> field of C<Crypt::Passphrase>.
 
-This returns true if the hash uses a different cipher or pepper, or if any of the encoder parameters is lower that desired by the encoder.
+=head3 active
 
-=method crypt_subtypes()
+The identifier of the active pepper.
 
-This returns all the types supported by the underlaying encoder cross joined with all supported hashes using the string C<"-pepper-"> (e.g. C<"argon2id-pepper-sha512-hmac">), as well as the underlaying types themselves.
+=head3 algorithm
 
-=method verify_password($password, $hash)
+The hash that is used for password creation, it must be one from the C<supported_hashes> list
 
-This will check if a password matches the hash, supporting both peppered and unpeppered hashed with the encoder.
+=head2 Mandatory methods
 
-=method supported_hashes()
+It expects the subclass to implement the following method:
 
-This returns the hashes that are supported for prehashing.
+=head3 prehash_password
+
+ $pepper->prehash_password($password, $algorithm, $id)
+
+This should prehash the C<$password> with C<$algorithm> and the pepper named by C<$id>.

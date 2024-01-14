@@ -125,6 +125,8 @@ Note that the supported algorithms depend entirely on your platform. The only op
 
 By default it uses the first supported algorithm in this list: C<yescript>, C<scrypt>, C<bcrypt>, C<SHAcrypt>, C<MD5crypt> and C<descrypt>.
 
+=head2 CONFIGURATION
+
 =method new(%args)
 
 This creates a new crypt encoder, it takes named parameters that are all optional.
@@ -145,18 +147,6 @@ This sets the salt size for algorithm, it defaults to something that should be s
 
 =back
 
-=method hash_password($password)
-
-This hashes the passwords with argon2 according to the specified settings and a random salt (and will thus return a different result each time).
-
-=method needs_rehash($hash)
-
-This returns true if the hash uses a different cipher, or if any of the parameters are different than desired by the encoder.
-
-=method crypt_subtypes()
+=head2 SUPPORTED CRYPT TYPES
 
 This returns whatever crypt types it can discover on your system.
-
-=method verify_password($password, $hash)
-
-This will check if a password matches linux crypt hash.

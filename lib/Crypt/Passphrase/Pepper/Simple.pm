@@ -62,19 +62,19 @@ This module wraps another encoder to pepper the input to the hash. By using iden
 
 It will be able to validate both peppered and unpeppered hashes.
 
-=method new(%args)
+=head1 CONFIGURATION
 
-This creates a new pepper encoder. It takes the following named arguments:
+It takes the following configuration arguments:
 
 =over 4
 
 =item * inner
 
-This contains an encoder specification identical to the C<encoder> field of C<Crypt::Passphrase>. It is mandatory.
+This contains an encoder specification identical to the C<encoder> field of C<Crypt::Passphrase>. C<It is mandatory>.
 
 =item * peppers
 
-This is a map of identifier to pepper value. The identifiers should be (probably small) numbers, the values should be random binary strings that are long enough to not be brute-forcable (the output size of the hash is a good choice).
+This is a map of identifier to pepper value. The identifiers should be (probably small) numbers, the values should be random binary strings that are long enough to not be brute-forcable (the output size of the hash is a good choice). B<This is mandatory>.
 
 =item * active
 
@@ -86,6 +86,6 @@ This is the algorithm that's used for peppering. Supported values are C<'sha1-hm
 
 =back
 
-=method prehash_password($password, $algorithm, $identifier)
+=head2 Supported types
 
-This prehashes the C<$password> using the given C<$algorithm> and C<$identifier>.
+The supported peppered types are a the inner encoders types cross joined with the algorithms with C<"-pepper-"> (e.g. C<"argon2id-pepper-sha512-hmac">), as well as the underlaying types themselves (e.g. C<"argon2id">.

@@ -35,19 +35,27 @@ sub raw_hash {
 
 This class can be useful for plugging C<Crypt::Passphrase> into some frameworks (e.g. ORMs) that require a singular object to contain everything you need to match passwords against. Effectively it's little more or less than currying the C<$hash> parameter to C<verify_password> and C<needs_rehash>.
 
-=method new($crypt_passphrase, $raw_hash)
+=method new
 
-This takes a C<Crypt::Passphrase> object, and a hash string. You probably want to use the C<curry_with_hash> or C<curry_with_password> methods on C<Crypt::Passphrase> instead of calling this directly.
+ Crypt::Passphrase::PassphraseHash->new($crypt_passphrase, $raw_hash)
 
-=method verify_password($password)
+This takes a C<Crypt::Passphrase> object, and a hash string. You probably want to use the C<curry_with_hash> or C<curry_with_password> methods on C<Crypt::Passphrase> instead of calling this directly. Typically called by C<< Crypt::Passphrase->curry_with_hash($hash) >> instead of directly.
+
+=method verify_password
+
+ $hash->verify_password($password)
 
 Verify that the password matches the hash in this object.
 
-=method needs_rehash()
+=method needs_rehash
+
+ $hash->needs_rehash
 
 Check if the hash needs to be rehashed.
 
-=method raw_hash()
+=method raw_hash
+
+ $hash->raw_hash
 
 This returns the hash contained in this object as a string.
 
