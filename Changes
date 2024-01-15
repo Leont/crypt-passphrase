@@ -1,6 +1,8 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+
+0.017     2024-01-15 02:19:46+01:00 Europe/Brussels
           - Use unbuffered randomness
           - Reorganize documentation
 
