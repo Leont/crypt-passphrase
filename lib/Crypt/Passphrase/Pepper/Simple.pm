@@ -23,7 +23,6 @@ sub new {
 	my $peppers = $args{peppers} or croak('No peppers given');
 	$args{active} //= (sort {; no warnings 'numeric'; $b <=> $a || $b cmp $a } keys %{ $peppers })[0];
 	$args{algorithm} //= 'sha512-hmac';
-	$args{supported_hashes} //= [ keys %algorithms ];
 
 	return $class->SUPER::new(%args);
 }
@@ -33,6 +32,11 @@ sub prehash_password {
 	my $secret = $self->{peppers}{$id} or croak "No such pepper $id";
 	my $func = $algorithms{$algorithm} or croak "No such algorithm $algorithm";
 	return $func->($password, $secret);
+}
+
+sub supported_hashes {
+	my $self = shift;
+	return keys %algorithms;
 }
 
 1;

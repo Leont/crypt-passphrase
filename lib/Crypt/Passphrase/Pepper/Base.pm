@@ -34,11 +34,6 @@ sub _to_inner {
 	}
 }
 
-sub supported_hashes {
-	my $self = shift;
-	return @{ $self->{supported_hashes} || [] };
-}
-
 sub prehash_password;
 
 sub hash_password {
