@@ -5,7 +5,7 @@ use warnings;
 
 use parent 'Crypt::Passphrase::Validator';
 
-use Crypt::URandom 0.037;
+use Crypt::URandom 0.37;
 
 sub random_bytes {
 	my ($self, $count) = @_;
