@@ -1,6 +1,8 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+
+0.018     2024-01-16 20:39:47+01:00 Europe/Berlin
           - Depend on the correct Crypt::URandom version
 
 0.017     2024-01-15 02:19:46+01:00 Europe/Brussels
