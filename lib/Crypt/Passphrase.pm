@@ -140,12 +140,6 @@ sub curry_with_hash {
 	return Crypt::Passphrase::PassphraseHash->new($self, $hash);
 }
 
-sub curry_with_password {
-	my ($self, $password) = @_;
-	my $hash = $self->hash_password($password);
-	return $self->curry_with_hash($hash);
-}
-
 1;
 
 # ABSTRACT: A module for managing passwords in a cryptographically agile manner

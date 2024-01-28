@@ -2,6 +2,7 @@ Revision history for Crypt-Passphrase
 
 {{$NEXT}}
           - Add recode_hash method to Crypt::Passphrase
+          - Remove deprecated curry_with_password method
 
 0.018     2024-01-16 20:39:47+01:00 Europe/Berlin
           - Depend on the correct Crypt::URandom version
