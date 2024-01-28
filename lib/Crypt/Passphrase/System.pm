@@ -8,14 +8,14 @@ use Crypt::Passphrase -encoder;
 use Carp 'croak';
 
 my @possibilities = (
-	[1   , '$1$'              ,  6, '$1$aaaaaa$FuYJ957Lgsw.eVsENqOok1'                                                                ],
-	[5   , '$5$rounds=535000$', 12, '$5$aaaaaa$9hHgJfCniK4.dU43ykArHVETrhKDDElbS.cioeCajw.'                                           ],
-	[6   , '$6$rounds=656000$', 12, '$6$aaaaaa$RgJSheuY/DBadaBm/5gQ.s3M9a/2n8gubwCE41kMiz1P4KcxORD6LxY2NUCuOQNZawfiD8tWWfRKg9v0CQjbH0'],
+	['1' , '$1$'              ,  6, '$1$aaaaaa$FuYJ957Lgsw.eVsENqOok1'                                                                ],
+	['5' , '$5$rounds=535000$', 12, '$5$aaaaaa$9hHgJfCniK4.dU43ykArHVETrhKDDElbS.cioeCajw.'                                           ],
+	['6' , '$6$rounds=656000$', 12, '$6$aaaaaa$RgJSheuY/DBadaBm/5gQ.s3M9a/2n8gubwCE41kMiz1P4KcxORD6LxY2NUCuOQNZawfiD8tWWfRKg9v0CQjbH0'],
 	['2x', '$2x$12$'          , 16, '$2x$08$......................qrjEXaz4RUVmquy3IT5eLKXLB28ahI2'                                    ],
 	['2a', '$2a$12$'          , 16, '$2a$08$......................qrjEXaz4RUVmquy3IT5eLKXLB28ahI2'                                    ],
 	['2y', '$2y$12$'          , 16, '$2y$08$......................qrjEXaz4RUVmquy3IT5eLKXLB28ahI2'                                    ],
 	['2b', '$2b$12$'          , 16, '$2b$08$......................qrjEXaz4RUVmquy3IT5eLKXLB28ahI2'                                    ],
-	[7   , '$7$DU..../....'   , 16, '$7$AU..../....2Q9obwLhin8qvQl6sisAO/$E1HizYWxBmnIH4sdPkd1UOML9t62Gf.wvNTnt5XFzs8'                ],
+	['7' , '$7$DU..../....'   , 16, '$7$AU..../....2Q9obwLhin8qvQl6sisAO/$E1HizYWxBmnIH4sdPkd1UOML9t62Gf.wvNTnt5XFzs8'                ],
 	['gy', '$gy$j8T$'         , 16, '$gy$j9T$......................$5.2XCu2DhNfGzpifM7X8goEG2Wkio9cWIMtyWnX4tp2'                      ],
 	['y' , '$y$j8T$'          , 16, '$y$j9T$F5Jx5fExrKuPp53xLKQ..1$tnSYvahCwPBHKZUspmcxMfb0.WiB9W.zEaKlOBL35rC'                       ],
 );
@@ -125,17 +125,15 @@ Note that the supported algorithms depend entirely on your platform. The only op
 
 By default it uses the first supported algorithm in this list: C<yescript>, C<scrypt>, C<bcrypt>, C<SHAcrypt>, C<MD5crypt> and C<descrypt>.
 
-=head2 CONFIGURATION
+=head2 Configuration
 
-=method new(%args)
-
-This creates a new crypt encoder, it takes named parameters that are all optional.
+It takes the following arguments for configuration:
 
 =over 4
 
 =item * type
 
-The type of hash, this must be one of the values returned by the C<crypt_subtypes> method. If none is given it is picked as described above.
+The type of hash, this must be one of the values supported by the system. If none is given it is picked as described above.
 
 =item * settings
 
@@ -147,6 +145,6 @@ This sets the salt size for algorithm, it defaults to something that should be s
 
 =back
 
-=head2 SUPPORTED CRYPT TYPES
+=head2 Supported crypt types
 
 This returns whatever crypt types it can discover on your system.

@@ -100,7 +100,7 @@ The identifier of the active pepper.
 
 =head3 algorithm
 
-The hash that is used for password creation, it must be one from the C<supported_hashes> list
+The hash that is used for password creation.
 
 =head2 Mandatory methods
 
@@ -111,3 +111,7 @@ It expects the subclass to implement the following method:
  $pepper->prehash_password($password, $algorithm, $id)
 
 This should prehash the C<$password> with C<$algorithm> and the pepper named by C<$id>.
+
+=head3 supported_hashes
+
+This should return a list of hashes that are supported.
