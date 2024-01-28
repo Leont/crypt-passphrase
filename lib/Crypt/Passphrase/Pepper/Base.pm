@@ -14,6 +14,7 @@ sub new {
 
 	croak('No peppers given') if not defined $args{active};
 	croak("Invalid pepper name '$args{active}'") if $args{active} =~ /\W/;
+	croak('No hashing algorithm given') if not defined $args{algorithm};
 
 	my $self = bless {
 		%args,
@@ -26,8 +27,6 @@ sub new {
 sub _to_inner {
 	my $hash = shift;
 	if ($hash =~ s/ (?<= \A \$) ([\w-]+?)-pepper-([\w-]+) \$ v=1 , id=([^\$,]+) /$1/x) {
-		return ($hash, $2, $3);
-	} elsif ($hash =~ s/ (?<= \A \$) peppered-(\w+) \$ v=1 , alg=([^\$,]+) , id=([^\$,]+) /$1/x) {
 		return ($hash, $2, $3);
 	} else {
 		return;
