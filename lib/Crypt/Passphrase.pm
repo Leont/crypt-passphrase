@@ -129,6 +129,11 @@ sub verify_password {
 	return 0;
 }
 
+sub recode_hash {
+	my ($self, @args) = @_;
+	return $self->{encoder}->recode_hash(@args);
+}
+
 sub curry_with_hash {
 	my ($self, $hash) = @_;
 	require Crypt::Passphrase::PassphraseHash;
@@ -233,6 +238,12 @@ This will check a C<$password> satisfies a certain C<$hash> and returns success 
 This will check if a hash needs to be rehashed, either because it's in the wrong cipher or because the parameters are insufficient.
 
 Calling this only ever makes sense after a password has been verified.
+
+=method recode_hash
+
+ $passphrase->recode_hash($hash)
+
+This recodes a hash if possible. This is mainly relevant when upgrading to a new pepper, but can also be relevant when a cipher has multiple known encodings (e.g. scrypt).
 
 =method curry_with_hash
 

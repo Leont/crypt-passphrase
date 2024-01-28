@@ -24,6 +24,11 @@ sub accepts_hash {
 	return $hash =~ $self->{accepts_hash};
 }
 
+sub recode_hash {
+	my ($self, $hash, @args) = @_;
+	return $hash;
+}
+
 1;
 
 #ABSTRACT: Base class for Crypt::Passphrase encoders
@@ -34,7 +39,7 @@ This is a base class for password encoders. It is a subclass of C<Crypt::Passphr
 
 =head1 SUBCLASSING
 
-=head2 MANDATORY METHODS
+=head2 Mandatory methods
 
 It expects the subclass to implement the following four methods:
 
@@ -62,7 +67,13 @@ This method will return true if the password hash needs a rehash. This may eithe
 
 This method returns the types of crypt entries this validator supports. This is used to implement C<accepts_hash>.
 
-=head2 PROVIDED METHODS
+=head3 Optional methods
+
+=head3 recode_hash
+
+ $encoder->recode_hash($hash)
+
+=head2 Provided methods
 
 It provides the following methods to aid in implementing encoders:
 
