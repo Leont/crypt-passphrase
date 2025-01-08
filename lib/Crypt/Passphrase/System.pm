@@ -125,7 +125,7 @@ This class implements a Crypt::Passphrase encoder around your system's C<crypt()
 
 Note that the supported algorithms depend entirely on your platform. The only option portable among unices (descrypt) is not considered safe at all. It will try to pick a good default among the supported options. Because the different algorithms take different parameters they will have to be passed as a settings string if anything else is desired.
 
-By default it uses the first supported algorithm in this list: C<yescript>, C<scrypt>, C<bcrypt>, C<SHAcrypt>, C<MD5crypt> and C<descrypt>.
+By default it uses the first supported algorithm in this list: C<yescript>, C<scrypt>, C<bcrypt>, C<SHA512crypt>, C<SHA256crypt>, C<MD5crypt> and C<descrypt>.
 
 =head2 Configuration
 
@@ -137,16 +137,60 @@ It takes the following arguments for configuration:
 
 The type of hash, this must be one of the values supported by the system. If none is given it is picked as described above.
 
+=over 4
+
+=item * C<'y'> / C<'gy'>
+
+C<yescrypt>
+
+This is known to be supported on linux systems using C<libxcrypt>. C<'y'> is typically the default for system passwords on such systems.
+
+=item * C<'7'>
+
+C<scrypt>
+
+This is known to be supported on linux systems using C<libxcrypt>, FreeBSD and Solaris.
+
+=item * C<'2b'> / C<'2a'> / C<'2y'> / C<'2x'>
+
+C<bcrypt>
+
+This is the traditional default algoritm of BSD systems. Difference between these types is in obscure edge-cases, C<'2b'> should be prefered unless another variant is required. This is also supported on linux systems using C<libxcrypt> and Solaris.
+
+=item * C<'6'>
+
+C<SHA512crypt>
+
+This algorithm originated on Linux but is also supported on some BSDs and Solaris.
+
+=item * C<'5'>
+
+C<SHA256crypt>
+
+This algorithm originated on Linux but is also supported on some BSDs and Solaris.
+
+=item * C<'1'>
+
+C<MD5crypt>
+
+This is supported on Linux, many BSDs and Solaris.
+
+=item * C<''>
+
+C<descrypt>
+
+This is the only algorithm that is universally supported. Unfortunately it's also incredably unsafe and should not be used in production.
+
+Note that unlike all other supported algorithms this lacks a crypt header
+
+=back
+
 =item * settings
 
-The settings used for hashing the password, e.g. C<'$1$'>, C<'$2b$12$'>, C<'$6$rounds=65600$'>, C<'$7$DU..../....'> or C<'$y$j9T$'>. If you don't know what these mean you probably shouldn't touch this parameter. It defaults to something appropriate for your chosen / default algorithm.
+The settings used for hashing the password, combining the type above with a type specific information, e.g. C<'$1$'>, C<'$2b$12$'>, C<'$6$rounds=65600$'>, C<'$7$DU..../....'> or C<'$y$j9T$'>. If you don't know what these mean you probably shouldn't touch this parameter. It defaults to something appropriate for the selected algorithm.
 
 =item * salt_size
 
 This sets the salt size for algorithm, it defaults to something that should be sensible for your algorithm.
 
 =back
-
-=head2 Supported crypt types
-
-This returns whatever crypt types it can discover on your system.
