@@ -8,6 +8,7 @@ use Crypt::Passphrase -encoder;
 use Carp 'croak';
 
 my @possibilities = (
+	['',   ''                 ,  2, 'abJnggxhB/yWI' ],
 	['1' , '$1$'              ,  6, '$1$aaaaaa$FuYJ957Lgsw.eVsENqOok1'                                                                ],
 	['5' , '$5$rounds=535000$', 12, '$5$aaaaaa$9hHgJfCniK4.dU43ykArHVETrhKDDElbS.cioeCajw.'                                           ],
 	['6' , '$6$rounds=656000$', 12, '$6$aaaaaa$RgJSheuY/DBadaBm/5gQ.s3M9a/2n8gubwCE41kMiz1P4KcxORD6LxY2NUCuOQNZawfiD8tWWfRKg9v0CQjbH0'],
@@ -41,12 +42,10 @@ sub _get_parameters {
 		croak "Unsupported algorithm $type" if not $algorithm{$type};
 		return ($settings, $args{salt_size} // $algorithm{$type}{salt_size});
 	}
-	elsif (my $type = $args{type} // $default) {
-		$settings = $algorithm{$type}{settings} // croak "No such crypt type $type known";
-		return ($settings, $args{salt_size} // $algorithm{$type}{salt_size});
-	}
 	else {
-		return ('', 2);
+		my $type = $args{type} // $default;
+		$settings = $algorithm{$type}{settings} // croak "No such crypt type '$type' known";
+		return ($settings, $args{salt_size} // $algorithm{$type}{salt_size});
 	}
 }
 
