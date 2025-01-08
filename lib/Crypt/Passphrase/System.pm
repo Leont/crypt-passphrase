@@ -21,6 +21,7 @@ my @possibilities = (
 );
 
 my (%algorithm, $default);
+
 for my $row (@possibilities) {
 	my ($name, $setting, $salt_size, $value) = @{$row};
 	my $hash = eval { crypt 'password', $value };
@@ -84,6 +85,8 @@ sub hash_password {
 	my ($self, $password) = @_;
 	my $salt = $self->random_bytes($self->{salt_size});
 	my $encoded_salt = _encode_crypt64($salt);
+	substr $encoded_salt, 2, 1, '' if $self->{salt_size} == 2; # descrypt
+
 	return crypt $password, "$self->{settings}$encoded_salt\$";
 }
 

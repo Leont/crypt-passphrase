@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Substantially improve documentation of Crypt::Passphrase::System
 
 0.019     2024-01-28 19:12:25+01:00 Europe/Brussels
           - Add recode_hash method to Crypt::Passphrase
