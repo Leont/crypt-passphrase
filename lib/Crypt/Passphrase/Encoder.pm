@@ -73,6 +73,8 @@ This method returns the types of crypt entries this validator supports. This is 
 
  $encoder->recode_hash($hash)
 
+This method recodes the C<$hash> if possible. By default it will just return the hash unmodified, this is usualy what you want.
+
 =head2 Provided methods
 
 It provides the following methods to aid in implementing encoders:

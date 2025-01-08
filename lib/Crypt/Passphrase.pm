@@ -237,7 +237,7 @@ Calling this only ever makes sense after a password has been verified.
 
  $passphrase->recode_hash($hash)
 
-This recodes a hash if possible. This is mainly relevant when upgrading to a new pepper, but can also be relevant when a cipher has multiple known encodings (e.g. scrypt).
+This recodes a hash if needed. This is mainly relevant when upgrading to a new pepper, but can also be relevant when a cipher has multiple known encodings (e.g. scrypt). It will return the hash unmodified otherwise.
 
 =method curry_with_hash
 
