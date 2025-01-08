@@ -70,7 +70,7 @@ sub _encode_crypt64 {
 		my $v = ord(substr $bytes, $i, 1) |
 			(ord(substr $bytes, $i + 1, 1) << 8) |
 			(ord(substr $bytes, $i + 2, 1) << 16);
-		$digits .= substr($base64_digits, $v & 0x3f, 1) .
+			$digits .= substr($base64_digits, $v & 0x3f, 1) .
 			substr($base64_digits, ($v >> 6) & 0x3f, 1) .
 			substr($base64_digits, ($v >> 12) & 0x3f, 1) .
 			substr($base64_digits, ($v >> 18) & 0x3f, 1);
