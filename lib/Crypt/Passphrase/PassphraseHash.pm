@@ -39,7 +39,7 @@ This class can be useful for plugging C<Crypt::Passphrase> into some frameworks 
 
  Crypt::Passphrase::PassphraseHash->new($crypt_passphrase, $raw_hash)
 
-This takes a C<Crypt::Passphrase> object, and a hash string. You probably want to use the C<curry_with_hash> or C<curry_with_password> methods on C<Crypt::Passphrase> instead of calling this directly. Typically called by C<< Crypt::Passphrase->curry_with_hash($hash) >> instead of directly.
+This takes a C<Crypt::Passphrase> object, and a hash string. You probably want to use the C<curry_with_hash> method on C<Crypt::Passphrase> instead of calling this directly, e,g, C<< Crypt::Passphrase->curry_with_hash($hash) >>.
 
 =method verify_password
 
