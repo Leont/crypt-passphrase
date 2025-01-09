@@ -19,7 +19,7 @@ sub accepts_hash {
 	return !!0 if not defined $hash;
 	$self->{accepts_hash} //= do {
 		my $string = join '|', $self->crypt_subtypes or return;
-		qr/ \A \$ (?: $string ) \$ /x;
+		qr/ \A \$ (?: $string ) [\$,] /x;
 	};
 	return scalar $hash =~ $self->{accepts_hash};
 }

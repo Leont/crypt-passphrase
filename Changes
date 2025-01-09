@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Add support for more legacy algorithms in Crypt::Passphrase::System
           - Allow unknown algorithms in settings argument of Crypt::Passphrase::System
           - Substantially improve documentation of Crypt::Passphrase::System
 
