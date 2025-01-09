@@ -8,7 +8,7 @@ use Crypt::Passphrase -encoder;
 use Carp 'croak';
 
 my @possibilities = (
-	['',   ''                 ,  2, 'abJnggxhB/yWI' ],
+	['',   ''                 ,  2, 'abJnggxhB/yWI' , '%s%s'],
 	['1' , '$1$'              ,  6, '$1$aaaaaa$FuYJ957Lgsw.eVsENqOok1'                                                                ],
 	['5' , '$5$rounds=535000$', 12, '$5$aaaaaa$9hHgJfCniK4.dU43ykArHVETrhKDDElbS.cioeCajw.'                                           ],
 	['6' , '$6$rounds=656000$', 12, '$6$aaaaaa$RgJSheuY/DBadaBm/5gQ.s3M9a/2n8gubwCE41kMiz1P4KcxORD6LxY2NUCuOQNZawfiD8tWWfRKg9v0CQjbH0'],
@@ -24,10 +24,10 @@ my @possibilities = (
 my (%algorithm, $default);
 
 for my $row (@possibilities) {
-	my ($name, $setting, $salt_size, $value) = @{$row};
+	my ($name, $setting, $salt_size, $value, $format) = @{$row};
 	my $hash = eval { crypt 'password', $value };
 	if (defined $hash and $hash eq $value) {
-		$algorithm{$name} = { settings => $setting, salt_size => $salt_size };
+		$algorithm{$name} = { settings => $setting, salt_size => $salt_size, format => $format };
 		$default = $name;
 	}
 }
@@ -36,26 +36,27 @@ sub _get_parameters {
 	my %args = @_;
 
 	if (defined(my $settings = $args{settings})) {
-		return ('', 2) if $settings eq '';
+		return ('', 2, '%s%s') if $settings eq '';
 
-		my ($type) = $settings =~ /\A \$ ([^\$]+) \$ /x or croak "Invalid settings string '$settings'";
+		my $type = $settings =~ /\A \$ ([^\$]+) \$ /x or croak "Invalid settings string '$settings'";
 		croak "Unsupported algorithm $type" if not $algorithm{$type};
-		return ($settings, $args{salt_size} // $algorithm{$type}{salt_size});
+		return ($settings, $args{salt_size} // $algorithm{$type}{salt_size}, $algorithm{$type}{format} // '%s%s$');
 	}
 	else {
 		my $type = $args{type} // $default;
-		$settings = $algorithm{$type}{settings} // croak "No such crypt type '$type' known";
-		return ($settings, $args{salt_size} // $algorithm{$type}{salt_size});
+		my $settings = $algorithm{$type}{settings} // croak "No such crypt type '$type' known";
+		return ($settings, $args{salt_size} // $algorithm{$type}{salt_size}, $algorithm{$type}{format} // '%s%s$');
 	}
 }
 
 sub new {
 	my ($class, %args) = @_;
 
-	my ($settings, $salt_size) = _get_parameters(%args);
+	my ($settings, $salt_size, $format) = _get_parameters(%args);
 	return bless {
 		settings  => $settings,
 		salt_size => $salt_size,
+		format    => $format,
 	}, $class;
 }
 
@@ -86,7 +87,8 @@ sub hash_password {
 	my $encoded_salt = _encode_crypt64($salt);
 	substr $encoded_salt, 2, 1, '' if $self->{salt_size} == 2; # descrypt
 
-	return crypt $password, "$self->{settings}$encoded_salt\$";
+	my $settings = sprintf $self->{format}, $self->{settings}, $encoded_salt;
+	return crypt $password, $settings;
 }
 
 my $descrypt = qr{ \A [./0-9A-Za-z]{13} \z }x;
