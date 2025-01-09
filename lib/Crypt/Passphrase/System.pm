@@ -32,27 +32,26 @@ for my $row (@possibilities) {
 	}
 }
 
-sub _get_parameters {
-	my %args = @_;
-
-	if (defined(my $settings = $args{settings})) {
-		return ('', 2, '%s%s') if $settings eq '';
-
-		my $type = $settings =~ /\A \$ ([^\$]+) \$ /x or croak "Invalid settings string '$settings'";
-		croak "Unsupported algorithm $type" if not $algorithm{$type};
-		return ($settings, $args{salt_size} // $algorithm{$type}{salt_size}, $algorithm{$type}{format} // '%s%s$');
-	}
-	else {
-		my $type = $args{type} // $default;
-		my $settings = $algorithm{$type}{settings} // croak "No such crypt type '$type' known";
-		return ($settings, $args{salt_size} // $algorithm{$type}{salt_size}, $algorithm{$type}{format} // '%s%s$');
-	}
-}
-
 sub new {
 	my ($class, %args) = @_;
 
-	my ($settings, $salt_size, $format) = _get_parameters(%args);
+	my ($settings, $salt_size, $format);
+	if (defined($settings = $args{settings})) {
+		if ($settings eq '') {
+			($salt_size, $format) = (2, '%s%s');
+		} else {
+			my $type = $settings =~ /\A \$ ([^\$]+) \$ /x or croak "Invalid settings string '$settings'";
+			$salt_size = $args{salt_size} // $algorithm{$type}{salt_size} // 16;
+			$format = $args{format} // $algorithm{$type}{format} // '%s%s$';
+		}
+	}
+	else {
+		my $type = $args{type} // $default // croak 'No known crypt type found';
+		$settings = $algorithm{$type}{settings} // croak "No such crypt type '$type' known";
+		$salt_size = $args{salt_size} // $algorithm{$type}{salt_size};
+		$format = $args{format} // $algorithm{$type}{format} // '%s%s$';
+	}
+
 	return bless {
 		settings  => $settings,
 		salt_size => $salt_size,
