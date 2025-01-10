@@ -30,8 +30,8 @@ sub verify_password {
 =head1 SYNOPSIS
 
  sub plaintext {
-	my ($password, $hash) = @_;
-	return $password eq $hash;
+     my ($password, $hash) = @_;
+     return $password eq $hash;
  }
 
  my $passphrase = Crypt::Passphrase->new(
