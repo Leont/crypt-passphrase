@@ -3,6 +3,8 @@ package Crypt::Passphrase::Validator;
 use strict;
 use warnings;
 
+our @CARP_NOT = 'Crypt::Passphrase';
+
 sub secure_compare {
 	my ($self, $left, $right) = @_;
 	return if length $left != length $right;

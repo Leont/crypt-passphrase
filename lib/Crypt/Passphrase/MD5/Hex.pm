@@ -3,7 +3,7 @@ package Crypt::Passphrase::MD5::Hex;
 use strict;
 use warnings;
 
-use Crypt::Passphrase -validator;
+use parent 'Crypt::Passphrase::Validator';
 
 use Digest::MD5 'md5';
 

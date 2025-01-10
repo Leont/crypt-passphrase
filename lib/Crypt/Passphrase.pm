@@ -3,8 +3,6 @@ package Crypt::Passphrase;
 use strict;
 use warnings;
 
-use mro ();
-
 use Carp ();
 use Scalar::Util ();
 use Encode ();
@@ -18,16 +16,12 @@ sub import {
 		if ($arg eq '-encoder') {
 			require Crypt::Passphrase::Encoder;
 			no strict 'refs';
-			no warnings 'once';
 			push @{"$caller\::ISA"}, 'Crypt::Passphrase::Encoder' unless $caller->isa('Crypt::Passphrase::Encoder');
-			push @{"$caller\::CARP_NOT"}, __PACKAGE__, mro::get_linear_isa($caller);
 		}
 		elsif ($arg eq '-validator') {
 			require Crypt::Passphrase::Validator;
 			no strict 'refs';
-			no warnings 'once';
 			push @{"$caller\::ISA"}, 'Crypt::Passphrase::Validator' unless $caller->isa('Crypt::Passphrase::Validator');
-			push @{"$caller\::CARP_NOT"}, __PACKAGE__, mro::get_linear_isa($caller);
 		}
 		elsif ($arg eq '-integration') {
 			push @CARP_NOT, $caller;

@@ -3,7 +3,7 @@ package Crypt::Passphrase::SHA1::Base64;
 use strict;
 use warnings;
 
-use Crypt::Passphrase -validator;
+use parent 'Crypt::Passphrase::Validator';
 
 use Digest::SHA 'sha1';
 use MIME::Base64 'decode_base64';

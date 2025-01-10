@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use parent 'Crypt::Passphrase::Pepper::Base';
-use Crypt::Passphrase -encoder;
 
 use Carp 'croak';
 use Digest::SHA;

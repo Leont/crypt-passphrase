@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Fix skipping of internal packages in error messages
 
 0.020     2025-01-10 20:08:38+01:00 Europe/Brussels
           - Add support for more legacy algorithms in Crypt::Passphrase::System

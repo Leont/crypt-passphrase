@@ -3,7 +3,7 @@ package Crypt::Passphrase::System;
 use strict;
 use warnings;
 
-use Crypt::Passphrase -encoder;
+use parent 'Crypt::Passphrase::Encoder';
 
 use Carp 'croak';
 
