@@ -1,6 +1,8 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+
+0.021     2025-02-04 20:20:48+01:00 Europe/Brussels
           - Use Crypt::SysRandom as source of randomness
           - Fix skipping of internal packages in error messages
 
