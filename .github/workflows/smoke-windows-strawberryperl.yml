@@ -18,8 +18,8 @@ jobs:
       - uses: actions/checkout@master
         with:
             fetch-depth: 10
-      - name: cpan Crypt::URandom
-        run: cpan Crypt::URandom
+      - name: cpan Crypt::SysRandom
+        run: cpan Crypt::SysRandom
       - name: Run Tests
         shell: cmd
         run: |
