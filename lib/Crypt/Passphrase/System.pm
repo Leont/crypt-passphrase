@@ -5,6 +5,8 @@ use warnings;
 
 use parent 'Crypt::Passphrase::Encoder';
 
+use Crypt::Passphrase::Util::Crypt64 'encode_crypt64';
+
 use Carp 'croak';
 
 my @possibilities = (
@@ -65,31 +67,10 @@ sub new {
 	}, $class;
 }
 
-my $base64_digits = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-sub _encode_crypt64 {
-	my $bytes = shift;
-	my $nbytes = length $bytes;
-	my $npadbytes = 2 - ($nbytes + 2) % 3;
-	$bytes .= "\0" x $npadbytes;
-	my $digits = '';
-	for (my $i = 0; $i < $nbytes; $i += 3) {
-		my $v = ord(substr $bytes, $i, 1) |
-			(ord(substr $bytes, $i + 1, 1) << 8) |
-			(ord(substr $bytes, $i + 2, 1) << 16);
-			$digits .= substr($base64_digits, $v & 0x3f, 1) .
-			substr($base64_digits, ($v >> 6) & 0x3f, 1) .
-			substr($base64_digits, ($v >> 12) & 0x3f, 1) .
-			substr($base64_digits, ($v >> 18) & 0x3f, 1);
-	}
-	substr $digits, -$npadbytes, $npadbytes, '';
-	return $digits;
-}
-
-
 sub hash_password {
 	my ($self, $password) = @_;
 	my $salt = $self->random_bytes($self->{salt_size});
-	my $encoded_salt = _encode_crypt64($salt);
+	my $encoded_salt = encode_crypt64($salt);
 	substr $encoded_salt, 2, 1, '' if $self->{salt_size} == 2; # descrypt
 
 	my $settings = sprintf $self->{format}, $self->{settings}, $encoded_salt;
