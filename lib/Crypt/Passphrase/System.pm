@@ -140,7 +140,7 @@ This class implements a Crypt::Passphrase encoder around your system's C<crypt()
 
 Note that the supported algorithms depend entirely on your platform. The only option portable among unices (descrypt) is not considered safe at all. It will try to pick a good default among the supported options. Because the different algorithms take different parameters they will have to be passed as a settings string if anything else is desired.
 
-By default it uses the first supported algorithm in this list: C<yescript>, C<scrypt>, C<bcrypt>, C<SHA512crypt>, C<SHA256crypt>, C<SHA1crypt>, C<MD5crypt>, extended C<descrypt>, C<descrypt> and C<NTHASH>.
+By default it uses the first supported algorithm in this list: C<yescrypt>, C<scrypt>, C<bcrypt>, C<SHA512crypt>, C<SHA256crypt>, C<SHA1crypt>, C<MD5crypt>, extended C<descrypt>, C<descrypt> and C<NTHASH>.
 
 =head2 Configuration
 
