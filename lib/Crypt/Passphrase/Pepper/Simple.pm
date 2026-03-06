@@ -61,6 +61,10 @@ This module wraps another encoder to pepper the input to the hash. By using iden
 
 It will be able to validate both peppered and unpeppered hashes.
 
+=head2 Discouraged.
+
+This module is generally discouraged in favor of better peppering implementations such as L<Crypt::Passphrase::Argon2::AES> and L<Crypt::Passphrase::Bcrypt::AES>. Post-encryption has two advantaged over pre-hashing. Firstly is has actualy cryptographic proof of security, and secondly it allowes for repeppering without needing to know the password.
+
 =head1 CONFIGURATION
 
 It takes the following configuration arguments:
@@ -87,4 +91,4 @@ This is the algorithm that's used for peppering. Supported values are C<'sha1-hm
 
 =head2 Supported types
 
-The supported peppered types are a the inner encoders types cross joined with the algorithms with C<"-pepper-"> (e.g. C<"argon2id-pepper-sha512-hmac">), as well as the underlaying types themselves (e.g. C<"argon2id">.
+The supported peppered types are a the inner encoders types cross joined with the algorithms with C<"-pepper-"> (e.g. C<"argon2id-pepper-sha512-hmac">), as well as the underlaying types themselves (e.g. C<"argon2id">).
