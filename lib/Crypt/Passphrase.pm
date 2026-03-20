@@ -293,7 +293,7 @@ A peppering implementation that AES encrypts a bcrypt hash. Recommended when wan
 
 =item * L<Crypt::Passphrase::PBKDF2|Crypt::Passphrase::PBKDF2>
 
-A FIPS-standardized hashing algorithm. Only recommended when FIPS-compliance is required.
+A FIPS-standardized hashing algorithm. Only recommended when FIPS-compliance is required. This is the only portable pure-perl backend.
 
 =item * L<Crypt::Passphrase::Linux|Crypt::Passphrase::Linux>
 
@@ -310,6 +310,10 @@ Your system's C<crypt> implementation. Support for various algorithms varies bet
 =item * L<Crypt::Passphrase::Pepper::Simple|Crypt::Passphrase::Pepper::Simple>
 
 A meta-encoder that adds peppering to your passwords by pre-hashing the inputs. Recommended only when wanting to pepper with hashes other than argon2 or bcrypt as it can be combined with any encoder. It is provided in this distribution.
+
+=item * L<Crypt::Passphrase::HSM|Crypt::Passphrase::HSM>
+
+This encoder uses a MAC (like HMAC) to hash the password with a pepper stored in the HSM.
 
 =back
 
@@ -360,9 +364,3 @@ This integrates Crypt::Passphrase into the L<Mojolicious|Mojolicious> web framew
 This integrates Crypt::Passphrase into the L<Dancer2|Dancer2> web framework.
 
 =back
-
-=begin Pod::Coverage
-
-curry_with_password
-
-=end Pod::Coverage
