@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Use secure_compare in legacy validators
 
 0.022     2026-03-21 22:55:35+01:00 Europe/Brussels
           - Add Crypt::Passphrase::Crypt64

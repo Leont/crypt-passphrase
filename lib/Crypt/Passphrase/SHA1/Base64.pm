@@ -21,7 +21,7 @@ sub accepts_hash {
 sub verify_password {
 	my ($self, $password, $hash) = @_;
 	my $new_hash = sha1($password);
-	return $new_hash eq decode_base64($hash);
+	return $self->secure_compare($new_hash, decode_base64($hash));
 }
 
 1;

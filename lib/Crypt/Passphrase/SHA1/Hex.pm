@@ -19,7 +19,7 @@ sub accepts_hash {
 
 sub verify_password {
 	my ($self, $password, $hash) = @_;
-	return sha1($password) eq pack 'H40', $hash;
+	return $self->secure_compare(sha1($password), pack 'H40', $hash);
 }
 
 1;
