@@ -1,6 +1,8 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+
+0.023     2026-05-15 21:39:20+02:00 Europe/Brussels
           - Use secure_compare in legacy validators
           - Make secure_compare constant-time even when inputs are different lengths
 
