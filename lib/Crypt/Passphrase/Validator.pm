@@ -6,11 +6,12 @@ use warnings;
 our @CARP_NOT = 'Crypt::Passphrase';
 
 sub secure_compare {
-	my ($self, $left, $right) = @_;
-	return if length $left != length $right;
-	my $r = 0;
+	my ($self, $up, $down) = @_;
+	my $r = length $up != length $down;
+	my $left = $up . $down;
+	my $right = $down . $up;
 	$r |= ord(substr $left, $_, 1) ^ ord(substr $right, $_, 1) for 0 .. length($left) - 1;
-	return $r == 0 ? 1 : undef;
+	return $r == 0;
 }
 
 1;
