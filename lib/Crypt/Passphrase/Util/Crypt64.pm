@@ -80,7 +80,7 @@ sub decode_crypt64_number {
 
 =head1 SYNOPSIS
 
- use Crypt::Passphrase::Crypt64 ':all';
+ use Crypt::Passphrase::Util::Crypt64 ':all';
 
  my $encoded = encode_crypt64('abcd');
  my $decoded = decode_crypt64($encoded);
