@@ -1,6 +1,7 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+          - Enable static install
 
 0.023     2026-05-15 21:39:20+02:00 Europe/Brussels
           - Use secure_compare in legacy validators
