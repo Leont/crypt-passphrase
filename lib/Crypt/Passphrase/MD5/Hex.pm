@@ -14,7 +14,7 @@ sub new {
 
 sub accepts_hash {
 	my ($self, $hash) = @_;
-	return $hash =~ / ^ [a-f0-9]{32} $/xi;
+	return $hash =~ / ^ [a-f0-9]{32} \z /xi;
 }
 
 sub verify_password {
