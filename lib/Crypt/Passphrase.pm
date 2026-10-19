@@ -113,6 +113,7 @@ sub needs_rehash {
 sub verify_password {
 	my ($self, $password, $hash) = @_;
 
+	return !!0 if not defined $hash;
 	for my $validator (@{ $self->{validators} }) {
 		if ($validator->accepts_hash($hash)) {
 			my $normalized = $self->_normalize_password($password);
