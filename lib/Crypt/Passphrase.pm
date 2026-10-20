@@ -75,19 +75,25 @@ sub _load_validator {
 	}
 }
 
-my %valid = map { $_ => 1 } qw/C D KC KD/;
+my %normalizer_for = (
+	C  => \&Unicode::Normalize::NFC,
+	D  => \&Unicode::Normalize::NFD,
+	KC => \&Unicode::Normalize::NFKC,
+	KD => \&Unicode::Normalize::NFKD,
+);
 sub new {
 	my ($class, %args) = @_;
 	Carp::croak('No encoder given to Crypt::Passphrase->new') if not $args{encoder};
 	my $encoder = _load_encoder($args{encoder});
 	my @validators = map { _load_validator($_) } @{ $args{validators} };
-	my $normalization = $args{normalization} || 'C';
-	Carp::croak("Invalid normalization form $normalization") if not $valid{$normalization};
+	my $normalization = $args{normalization} // 'C';
+	my $normalizer = ref $normalization eq 'CODE' ? $normalization : $normalizer_for{$normalization};
+	Carp::croak("Invalid normalization form $normalization") if ref $normalizer ne 'CODE';
 
 	my $self = bless {
-		encoder       => $encoder,
-		validators    => [ $encoder, @validators ],
-		normalization => $normalization,
+		encoder    => $encoder,
+		validators => [ $encoder, @validators ],
+		normalizer => $normalizer,
 	}, $class;
 
 	return $self;
@@ -95,7 +101,7 @@ sub new {
 
 sub _normalize_password {
 	my ($self, $password) = @_;
-	my $normalized = Unicode::Normalize::normalize($self->{normalization}, $password // '');
+	my $normalized = $self->{normalizer}->($password // '');
 	return Encode::encode('utf-8-strict', $normalized);
 }
 
@@ -204,7 +210,9 @@ This argument is optional and defaults to an empty list. The encoder is always c
 
 =item * normalization
 
-This sets the unicode normalization form used for the password. Valid values are C<'C'> (composed; the the default), C<'D'> (decomposed), C<'KC'> (legacy composed) and C<'KD'> (legacy decomposed). You should probably not change this unless it's necessary for compatibility with something else, you should definitely not change this on an existing database as that will break passwords affected by normalization.
+This sets the unicode normalization form used for the password. Valid values are C<'C'> (composed; the the default), C<'D'> (decomposed), C<'KC'> (legacy composed) and C<'KD'> (legacy decomposed). You should probably not change this unless it's necessary for compatibility with something else, you should generally not change this on an existing database as that will break passwords affected by normalization.
+
+Alternatively this is allowed to be a coderef.
 
 =back
 
