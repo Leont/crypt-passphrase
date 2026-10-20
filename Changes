@@ -1,6 +1,8 @@
 Revision history for Crypt-Passphrase
 
 {{$NEXT}}
+
+0.024     2026-10-20 16:41:18+02:00 Europe/Brussels
           - Check for undefined hash as early as possible
           - Enable static install
           - Allow normalization to be a coderef
