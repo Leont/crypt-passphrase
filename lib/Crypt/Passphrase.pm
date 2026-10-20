@@ -92,7 +92,7 @@ sub new {
 
 	my $self = bless {
 		encoder    => $encoder,
-		validators => [ $encoder, @validators ],
+		validators => \@validators,
 		normalizer => $normalizer,
 	}, $class;
 
@@ -120,14 +120,14 @@ sub verify_password {
 	my ($self, $password, $hash) = @_;
 
 	return !!0 if not defined $hash;
-	for my $validator (@{ $self->{validators} }) {
+	for my $validator ($self->{encoder}, @{ $self->{validators} }) {
 		if ($validator->accepts_hash($hash)) {
 			my $normalized = $self->_normalize_password($password);
 			return $validator->verify_password($normalized, $hash);
 		}
 	}
 
-	return 0;
+	return !!0;
 }
 
 sub recode_hash {
